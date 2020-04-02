@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+
+body {
+    display: flex;
+    justify-content: center;
+}
+
+.wrapper {
+    max-width: 1020px;  
+    width: 98%;
+}
+
+.textarea {
+    height: 150px;
+    width: 92%;
+    border-radius: 10px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.keyboard {
+    max-width: 1020px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.key {
+    width: 100%;
+    border: 1px solid red;
+    text-align: center;
+}
