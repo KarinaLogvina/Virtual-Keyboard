@@ -2,9 +2,11 @@
 
 html {
     background-color: #052635;
+    font-family: 'Quicksand', sans-serif;
 }
 body {
     display: flex;
+    align-items: center;
     justify-content: center;
 }
 
@@ -15,16 +17,18 @@ body {
 
 .textarea {
     height: 150px;
-    width: 96%;
+    width: 99%;
     border-radius: 10px;
+    background-color: #b4c4cc;
     font-family: 'Quicksand', sans-serif;
-    background-color: #052635;
 }
 
 .row {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  justify-content: space-between;
+
 }
 
 .keyboard {
@@ -34,20 +38,36 @@ body {
     flex-direction: column;
 }
 
-.row {
-    display: flex;
-    justify-content: space-between;
-}
-
 .key {
+    width: 100px;
+    height: 40px;
+    align-items: center;
     color: rgb(122, 120, 148);
-}
-
-.key {
-    width: 100%;
     border: 1px solid #687277;
     text-align: center;
     margin: 0.2%;
     border-radius: 3px;
 }
 
+.space {
+    width: 800px ;
+}
+
+span {
+    display: block;
+    margin-top: 9px;
+}
+
+.modal {
+    width: 200px;
+}
+
+.key:hover {
+    border-color: #fff;
+    color: #fff;
+    cursor: pointer;
+}
+
+.active {
+    background-color: rgb(139, 134, 134);
+}
