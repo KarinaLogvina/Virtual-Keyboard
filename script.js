@@ -46,17 +46,27 @@ const keyValueRu = [
   ['Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Ctrl', '←', '↓', '→'],
 ];
 
+const keyCode = [
+  ['Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspase'],
+  ['Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash', 'Delete'],
+  ['CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter'],
+  ['ShiftLeft', 'Backslash', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ArrowUp', 'ShiftRight'],
+  ['ControlLeft', 'OSLeft', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight'],
+];
+
 const rowSimbols = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+'];
 
 const rowList = [rowOne, rowTwo, rowThree, rowFour, rowFive];
+
 for (let i = 0; i < rowList.length; i += 1) {
-  keyValueEn[i].forEach((el) => {
+  keyValueEn[i].forEach((el, idx) => {
     const key = document.createElement('div');
     const span = document.createElement('span');
     span.innerHTML = el;
     key.className = 'key';
     key.append(span);
     rowList[i].append(key);
+    key.id = keyCode[i][idx];
   });
 }
 
@@ -71,13 +81,14 @@ rowThree.querySelectorAll('div')[0].classList.add('modal');
 rowThree.querySelectorAll('div')[12].classList.add('modal');
 
 const print = document.querySelector('.keyboard');
+let printLetter = print.closest('div').querySelector('span').innerHTML;
 print.addEventListener('mousedown', (event) => {
   if (event.target.className === 'keyboard' || event.target.className.includes('row')) {
     return;
   }
-  const letter = event.target.closest('div').querySelector('span').innerHTML;
+  let letter = event.target.closest('div').querySelector('span').innerHTML;
   event.target.closest('div').classList.add('active');
-  textArea.innerHTML += letter;
+  printSimbol(letter);
 });
 
 print.addEventListener('mouseup', (event) => {
@@ -87,10 +98,63 @@ print.addEventListener('mouseup', (event) => {
   event.target.closest('div').classList.remove('active');
 });
 
-const keyCode = [
-  ['Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspase'],
-  ['Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash', 'Delete'],
-  ['CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter'],
-  ['ShiftLeft', 'Backslash', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ArrowUp', 'ShiftRight'],
-  ['ControlLeft', 'OSLeft', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight'],
-];
+let capsLockON = false;
+let shiftON = false;
+const printSimbol = (simbol) => {
+  if(capsLockON || shiftON) {
+    simbol = simbol.toUpperCase();
+  }
+  if(capsLockON && shiftON) {
+    simbol = simbol.toLowerCase();
+  }
+  switch (simbol) {
+    case 'Tab':
+      simbol = '     ';
+      break;
+    case 'Enter':
+      simbol = '\n';
+      break;
+    case 'CapsLock':
+      simbol = simbol.toUpperCase();
+      break;
+    case 'Backspace':
+      simbol = textArea.innerHTML.slice(0, -1);
+      textArea.innerHTML = simbol;
+      simbol = '';
+      break;
+    case 'Alt':
+    case 'Ctrl':
+    case 'Shift':
+    case 'Win':
+      simbol = '';
+      break;
+    default:
+      simbol = simbol;
+  }
+  textArea.innerHTML += simbol;
+}
+
+document.addEventListener('keydown', (event) => {
+  const keyElement = document.querySelector(`#${event.code}`);
+  if (keyElement) {
+    let simbol = keyElement.closest('div').querySelector('span').innerHTML;
+    printSimbol(simbol);
+    keyElement.classList.add('active');
+    if(keyElement.id == 'ShiftLeft' || keyElement.id == 'ShiftRight') {
+      shiftON = true;
+    }
+    if(keyElement.id == 'CapsLock') {
+      capsLockON = !capsLockON;
+    }
+  }
+});
+
+document.addEventListener('keyup', (event) => {
+  const keyElement = document.querySelector(`#${event.code}`);
+  if (keyElement) {
+    keyElement.classList.remove('active');
+    if(keyElement.id == 'ShiftLeft' || keyElement.id == 'ShiftRight') {
+      shiftON = false;
+    }
+  }
+});
