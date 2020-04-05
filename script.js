@@ -2,48 +2,35 @@ const divContainer = document.createElement('div');
 divContainer.className = 'wrapper';
 document.body.append(divContainer);
 
-const textArea = document.createElement('textarea');
-textArea.className = 'textarea';
-divContainer.append(textArea);
+const createElement = (tag, name, base) => {
+  const elem = document.createElement(tag);
+  elem.className = name;
+  base.append(elem);
+  return elem;
+}
 
-const keyboardArea = document.createElement('div');
-keyboardArea.className = 'keyboard';
-divContainer.append(keyboardArea);
-
-const rowOne = document.createElement('div');
-rowOne.className = 'row one';
-keyboardArea.append(rowOne);
-
-const rowTwo = document.createElement('div');
-rowTwo.className = 'row two';
-keyboardArea.append(rowTwo);
-
-const rowThree = document.createElement('div');
-rowThree.className = 'row three';
-keyboardArea.append(rowThree);
-
-const rowFour = document.createElement('div');
-rowFour.className = 'row four';
-keyboardArea.append(rowFour);
-
-const rowFive = document.createElement('div');
-rowFive.className = 'row five';
-keyboardArea.append(rowFive);
+let textArea = createElement('textarea', 'textarea', divContainer);
+let keyboard = createElement('div', 'keyboard', divContainer);
+let rowOne = createElement('div', 'row one', keyboard);
+let rowTwo = createElement('div', 'row two', keyboard);
+let rowThree = createElement('div', 'row three', keyboard);
+let rowFour = createElement('div', 'row four', keyboard);
+let rowFive = createElement('div', 'row five', keyboard);
 
 const keyValueEn = [
-  ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'],
-  ['Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Del'],
-  ['CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '`', 'Enter'],
-  ['Shift', '\\', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '↑', 'Shift'],
-  ['Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Ctrl', '←', '↓', '→'],
+  [['`', '~'], ['1', '!'], ['2', '@'], ['3', '#'], ['4', '$'], ['5', '%'], ['6', '^'], ['7', '&'], ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], ['Backspace', 'Backspace']],
+  [['Tab', 'Tab'], ['q', 'Q'], ['w', 'W'], ['e', 'E'], ['r', 'R'], ['t', 'T'], ['y', 'Y'], ['u', 'U'], ['i', 'I'], ['o', 'O'], ['p', 'P'], ['[', '{'], [']', '}'], ['\\', '\\'], ['Del', 'Del']],
+  [['CapsLock', 'CapsLock'], ['a', 'A'], ['s', 'S'], ['d', 'D'], ['f', 'F'], ['g', 'G'], ['h', 'H'], ['j', 'J'], ['k', 'K'], ['l', 'L'], [';', ':'], ['`', '"'], ['Enter', 'Enter']],
+  [['Shift', 'Shifr'], ['\\', '||'], ['z', 'Z'], ['x', 'X'], ['c', 'C'], ['v', 'V'], ['b', 'B'], ['n', 'N'], ['m', 'M'], [',', '<'], ['.', '>'], ['/', '?'], ['↑', '↑'], ['Shift', 'Shift']],
+  [['Ctrl', 'Ctrl'], ['Win', 'Win'], ['Alt', 'Alt'], [' ', ' '], ['Alt', 'Alt'], ['Ctrl', 'Ctrl'], ['←', '←'], ['↓', '↓'], ['→', '→']],
 ];
 
 const keyValueRu = [
-  ['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'],
-  ['Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\', 'Del'],
-  ['CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'Enter'],
-  ['Shift', '\\', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', '↑', 'Shift'],
-  ['Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Ctrl', '←', '↓', '→'],
+  [['ё', 'Ё'], ['1', '!'], ['2', '"'], ['3', '№'], ['4', ';'], ['5', '%'], ['6', ':'], ['7', '?'], ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], ['Backspace', 'Backspace']],
+  [['Tab', 'Tab'], ['й', 'Й'], ['ц', 'Ц'], ['у', 'У'], ['к', 'К'], ['е', 'Е'], ['н', 'Н'], ['г', 'Г'], ['ш', 'Ш'], ['щ', 'Щ'], ['з', 'З'], ['х', 'Х'], ['ъ', 'Ъ'], ['\\', '\\'], ['Del', 'Del']],
+  [['CapsLock', 'CapsLock'], ['ф', 'Ф'], ['ы', 'Ы'], ['в', 'В'], ['а', 'А'], ['п', 'П'], ['р', 'Р'], ['о', 'О'], ['л', 'Л'], ['д', 'Д'], ['ж', 'Ж'], ['э', 'Э'], ['Enter', 'Enter']],
+  [['Shift', 'Shifr'], ['\\', '||'], ['я', 'Я'], ['ч', 'Ч'], ['c', 'C'], ['м', 'М'], ['и', 'И'], ['т', 'Т'], ['ь', 'Ь'], ['б', 'Б'], ['ю', 'Ю'], ['.', ','], ['↑', '↑'], ['Shift', 'Shift']],
+  [['Ctrl', 'Ctrl'], ['Win', 'Win'], ['Alt', 'Alt'], [' ', ' '], ['Alt', 'Alt'], ['Ctrl', 'Ctrl'], ['←', '←'], ['↓', '↓'], ['→', '→']],
 ];
 
 const keyCode = [
@@ -54,25 +41,24 @@ const keyCode = [
   ['ControlLeft', 'OSLeft', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight'],
 ];
 
-const rowSimbolsEn = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'Backspace'];
-const rowSimbolsRu = ['ё', '!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', 'Backspace'];
-const NumsEn = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'];
-const NumsRu = ['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'];
-
-let rowList = [rowOne, rowTwo, rowThree, rowFour, rowFive];
-const createKeys = (row, lang) => {
-  for (let i = 0; i < row.length; i += 1) {
-    rowList[i].innerHTML = "";
-    lang[i].forEach((el, idx) => {
-      const key = document.createElement('div');
-      const span = document.createElement('span');
-      span.innerHTML = el;
-      key.className = 'key';
-      key.append(span);
-      row[i].append(key);
-      key.id = keyCode[i][idx];
-    });
+const key = document.querySelectorAll('.row');
+const createKey = (elem) => {
+  if (lang === 'en') {
+    for (let i = 0; i < key[i].length; i += 1) {
+      key[i].innerHTML = "";
+      key[i].forEach((el, idx) => {
+        const but = document.createElement('div');
+        but.innerHTML = el;
+        but.className = 'key';
+        but[i].append(key);
+        key.id = keyCode[i][idx];
+      });
+    }
   }
+  if(lang === 'ru') {
+
+  }
+  /*
   const space = row[4].querySelectorAll('div');
   space[3].classList.add('space');
   const shifts = row[3].querySelectorAll('div');
@@ -82,9 +68,10 @@ const createKeys = (row, lang) => {
   row[1].querySelectorAll('div')[0].classList.add('modal');
   row[2].querySelectorAll('div')[0].classList.add('modal');
   row[2].querySelectorAll('div')[12].classList.add('modal');
+  */
 }
 
-createKeys(rowList, keyValueEn);
+createKey()
 
 let capsLockON = false;
 let shiftON = false;
@@ -127,7 +114,7 @@ const printSimbol = (simbol) => {
 };
 
 const print = document.querySelector('.keyboard');
-const printLetter = print.closest('div').querySelector('span').innerHTML;
+const printLetter = print.querySelector('div').innerHTML;
 print.addEventListener('mousedown', (event) => {
   if (event.target.className === 'keyboard' || event.target.className.includes('row')) {
     return;
