@@ -77,8 +77,8 @@ body {
 }
 
 @keyframes example {
-    0%   {background-color: #3FA6A7;}
-    25%  {background-color: #365DB1;}
+    0%   {background-color: #052635;}
+    25%  {background-color: #42687A;}
     50%  {background-color: #79799B;}
     100% {background-color: #293458;}
 }
