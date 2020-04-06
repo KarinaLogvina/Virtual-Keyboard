@@ -38,28 +38,16 @@ body {
 }
 
 .key {
-    width: 100px;
+    width: 11%;
     height: 40px;
     align-items: center;
     color: #000;
     border: 1px solid #000;
     text-align: center;
+    line-height: 2.4em;
     background-color: #42687a;
     margin: 0.2%;
     border-radius: 3px;
-}
-
-.space {
-    width: 800px ;
-}
-
-span {
-    display: block;
-    margin-top: 9px;
-}
-
-.modal {
-    width: 200px;
 }
 
 .key:hover {
@@ -68,6 +56,17 @@ span {
     cursor: pointer;
 }
 
+#Space {
+    width: 78%;
+}
+
+#Tab,
+#CapsLock,
+#ShiftLeft,
+#Backspace,
+#Enter {
+    width: 17%;
+}
 .active {
     background-color: #052635;
     border-color: #fff;

@@ -21,7 +21,7 @@ const keyValueEn = [
   [['`', '~'], ['1', '!'], ['2', '@'], ['3', '#'], ['4', '$'], ['5', '%'], ['6', '^'], ['7', '&'], ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], ['Backspace', 'Backspace']],
   [['Tab', 'Tab'], ['q', 'Q'], ['w', 'W'], ['e', 'E'], ['r', 'R'], ['t', 'T'], ['y', 'Y'], ['u', 'U'], ['i', 'I'], ['o', 'O'], ['p', 'P'], ['[', '{'], [']', '}'], ['\\', '\\'], ['Del', 'Del']],
   [['CapsLock', 'CapsLock'], ['a', 'A'], ['s', 'S'], ['d', 'D'], ['f', 'F'], ['g', 'G'], ['h', 'H'], ['j', 'J'], ['k', 'K'], ['l', 'L'], [';', ':'], ['`', '"'], ['Enter', 'Enter']],
-  [['Shift', 'Shifr'], ['\\', '||'], ['z', 'Z'], ['x', 'X'], ['c', 'C'], ['v', 'V'], ['b', 'B'], ['n', 'N'], ['m', 'M'], [',', '<'], ['.', '>'], ['/', '?'], ['↑', '↑'], ['Shift', 'Shift']],
+  [['Shift', 'Shift'], ['\\', '|'], ['z', 'Z'], ['x', 'X'], ['c', 'C'], ['v', 'V'], ['b', 'B'], ['n', 'N'], ['m', 'M'], [',', '<'], ['.', '>'], ['/', '?'], ['↑', '↑'], ['Shift', 'Shift']],
   [['Ctrl', 'Ctrl'], ['Win', 'Win'], ['Alt', 'Alt'], [' ', ' '], ['Alt', 'Alt'], ['Ctrl', 'Ctrl'], ['←', '←'], ['↓', '↓'], ['→', '→']],
 ];
 
@@ -29,7 +29,7 @@ const keyValueRu = [
   [['ё', 'Ё'], ['1', '!'], ['2', '"'], ['3', '№'], ['4', ';'], ['5', '%'], ['6', ':'], ['7', '?'], ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], ['Backspace', 'Backspace']],
   [['Tab', 'Tab'], ['й', 'Й'], ['ц', 'Ц'], ['у', 'У'], ['к', 'К'], ['е', 'Е'], ['н', 'Н'], ['г', 'Г'], ['ш', 'Ш'], ['щ', 'Щ'], ['з', 'З'], ['х', 'Х'], ['ъ', 'Ъ'], ['\\', '\\'], ['Del', 'Del']],
   [['CapsLock', 'CapsLock'], ['ф', 'Ф'], ['ы', 'Ы'], ['в', 'В'], ['а', 'А'], ['п', 'П'], ['р', 'Р'], ['о', 'О'], ['л', 'Л'], ['д', 'Д'], ['ж', 'Ж'], ['э', 'Э'], ['Enter', 'Enter']],
-  [['Shift', 'Shifr'], ['\\', '||'], ['я', 'Я'], ['ч', 'Ч'], ['c', 'C'], ['м', 'М'], ['и', 'И'], ['т', 'Т'], ['ь', 'Ь'], ['б', 'Б'], ['ю', 'Ю'], ['.', ','], ['↑', '↑'], ['Shift', 'Shift']],
+  [['Shift', 'Shift'], ['\\', '|'], ['я', 'Я'], ['ч', 'Ч'], ['c', 'C'], ['м', 'М'], ['и', 'И'], ['т', 'Т'], ['ь', 'Ь'], ['б', 'Б'], ['ю', 'Ю'], ['.', ','], ['↑', '↑'], ['Shift', 'Shift']],
   [['Ctrl', 'Ctrl'], ['Win', 'Win'], ['Alt', 'Alt'], [' ', ' '], ['Alt', 'Alt'], ['Ctrl', 'Ctrl'], ['←', '←'], ['↓', '↓'], ['→', '→']],
 ];
 
@@ -41,37 +41,31 @@ const keyCode = [
   ['ControlLeft', 'OSLeft', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight'],
 ];
 
-const key = document.querySelectorAll('.row');
-const createKey = (elem) => {
-  if (lang === 'en') {
-    for (let i = 0; i < key[i].length; i += 1) {
-      key[i].innerHTML = "";
-      key[i].forEach((el, idx) => {
-        const but = document.createElement('div');
-        but.innerHTML = el;
-        but.className = 'key';
-        but[i].append(key);
-        key.id = keyCode[i][idx];
-      });
-    }
+let rasklad = [keyValueRu, keyValueEn]
+const rows = [...document.querySelectorAll('.row')];
+const createKey = (rasklad, item) => {
+  for (let i = 0; i < rows.length; i += 1) {
+    rows[i].innerHTML = "";
+    rasklad[i].forEach((array, idx) => {
+      const but = document.createElement('div');
+      but.innerHTML = array[item];
+      but.className = 'key';
+      rows[i].append(but);
+      but.id = keyCode[i][idx];
+    });
   }
-  if(lang === 'ru') {
+};
 
-  }
-  /*
-  const space = row[4].querySelectorAll('div');
-  space[3].classList.add('space');
-  const shifts = row[3].querySelectorAll('div');
-  shifts[0].classList.add('modal');
-  shifts[13].classList.add('modal');
-  row[0].querySelectorAll('div')[13].classList.add('modal');
-  row[1].querySelectorAll('div')[0].classList.add('modal');
-  row[2].querySelectorAll('div')[0].classList.add('modal');
-  row[2].querySelectorAll('div')[12].classList.add('modal');
-  */
+let language = '';
+if (localStorage.language === undefined) {
+  language = 'en';
+  localStorage.language = language;
+  createKey(rasklad[0], 0);
+} else {
+  language = localStorage.language;
+  createKey(rasklad[1], 0);
 }
 
-createKey()
 
 let capsLockON = false;
 let shiftON = false;
@@ -105,6 +99,7 @@ const printSimbol = (simbol) => {
     case 'Ctrl':
     case 'Shift':
     case 'Win':
+    case 'Del':
       simbol = '';
       break;
     default:
@@ -119,7 +114,7 @@ print.addEventListener('mousedown', (event) => {
   if (event.target.className === 'keyboard' || event.target.className.includes('row')) {
     return;
   }
-  const letter = event.target.closest('div').querySelector('span').innerHTML;
+  const letter = event.target.closest('div').innerHTML;
   event.target.closest('div').classList.add('active');
   printSimbol(letter);
 });
@@ -131,27 +126,39 @@ print.addEventListener('mouseup', (event) => {
   event.target.closest('div').classList.remove('active');
 });
 
+const switchLanguage = () => {
+  if (language === 'ru') {
+    createKey(keyValueRu, 0);
+  } else {
+    createKey(keyValueEn, 0);
+  }
+}
+
 document.addEventListener('keydown', (event) => {
   const keyElement = document.querySelector(`#${event.code}`);
   if (keyElement) {
-    let simbol = keyElement.closest('div').querySelector('span').innerHTML;
+    let simbol = keyElement.closest('div').innerHTML;
     printSimbol(simbol);
     keyElement.classList.add('active');
     if (keyElement.id === 'ShiftLeft' || keyElement.id === 'ShiftRight') {
       shiftON = true;
-      keyValueEn[0] = rowSimbolsEn;
-      keyValueEn[1][11] = '{';
-      keyValueEn[1][12] = '}';
-      keyValueEn[2][10] = ':';
-      keyValueEn[2][11] = '"';
-      keyValueEn[3][9] = '<';
-      keyValueEn[3][10] = '>';
-      keyValueEn[3][11] = '?';
-      createKeys(rowList, keyValueEn);
+      createKey(keyValueEn, 1);
+      keyElement.classList.add('active');
     }
     if (keyElement.id === 'CapsLock') {
+      keyElement.classList.add('active');
       capsLockON = !capsLockON;
       simbol.toLocaleUpperCase();
+      createKey(keyValueEu, 1);
+    }
+    if (keyElement.id === 'AltLeft' && keyElement.id === 'ControlLeft' && language === 'en') {
+      language = 'ru';
+      localStorage.language = 'ru';
+      switchLanguage();
+    } else if (keyElement.id === 'AltLeft' && keyElement.id === 'ControlLeft' && language === 'ru') {
+      language = 'en';
+      localStorage.language = 'en';
+      switchLanguage();
     }
   }
 });
@@ -162,15 +169,7 @@ document.addEventListener('keyup', (event) => {
     keyElement.classList.remove('active');
     if (keyElement.id === 'ShiftLeft' || keyElement.id === 'ShiftRight') {
       shiftON = false;
-      keyValueEn[0] = NumsEn;
-      keyValueEn[1][11] = '[';
-      keyValueEn[1][12] = ']';
-      keyValueEn[2][10] = ';';
-      keyValueEn[2][11] = '`';
-      keyValueEn[3][9] = '.';
-      keyValueEn[3][10] = ',';
-      keyValueEn[3][11] = '/';
-      createKeys(rowList, keyValueEn);
+      createKey(keyValueEn, 0);
     }
   }
 });
