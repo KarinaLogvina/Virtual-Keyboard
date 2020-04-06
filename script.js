@@ -41,7 +41,11 @@ const keyCode = [
   ['ControlLeft', 'OSLeft', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight'],
 ];
 
-let rasklad = [keyValueRu, keyValueEn]
+let rasklad = {
+  ru: keyValueRu,
+  en: keyValueEn
+};
+
 const rows = [...document.querySelectorAll('.row')];
 const createKey = (rasklad, item) => {
   for (let i = 0; i < rows.length; i += 1) {
@@ -52,7 +56,7 @@ const createKey = (rasklad, item) => {
       but.className = 'key';
       rows[i].append(but);
       but.id = keyCode[i][idx];
-      if (but.id === 'ShiftLeft' ||  but.id === 'Tab' || but.id === 'CapsLock' || but.id === 'Enter' || but.id === 'Backspace') {
+      if (but.id === 'ShiftLeft' || but.id === 'Tab' || but.id === 'CapsLock' || but.id === 'Enter' || but.id === 'Backspace') {
         but.classList.add('special');
       }
       if (but.id === 'Space') {
@@ -61,17 +65,6 @@ const createKey = (rasklad, item) => {
     });
   }
 };
-
-let language = '';
-if (localStorage.language === undefined) {
-  language = 'en';
-  localStorage.language = language;
-  createKey(rasklad[0], 0);
-} else {
-  language = localStorage.language;
-  createKey(rasklad[1], 0);
-}
-
 
 let capsLockON = false;
 let shiftON = false;
@@ -131,12 +124,18 @@ print.addEventListener('mouseup', (event) => {
   event.target.closest('div').classList.remove('active');
 });
 
+if (localStorage.language === undefined) {
+  localStorage.language = window.navigator.language.slice(0, 2);
+}
+createKey(rasklad[localStorage.language], 0);
+
 const switchLanguage = () => {
-  if (language === 'ru') {
-    createKey(keyValueRu, 0);
+  if (localStorage.language === 'ru') {
+    localStorage.language = 'en';
   } else {
-    createKey(keyValueEn, 0);
+    localStorage.language = 'ru';
   }
+  createKey(rasklad[localStorage.language], 0);
 }
 
 document.addEventListener('keydown', (event) => {
@@ -145,24 +144,19 @@ document.addEventListener('keydown', (event) => {
     let simbol = keyElement.closest('div').innerHTML;
     printSimbol(simbol);
     keyElement.classList.add('active');
+    console.log(keyElement);
     if (keyElement.id === 'ShiftLeft' || keyElement.id === 'ShiftRight') {
       shiftON = true;
-      createKey(keyValueEn, 1);
-      keyElement.classList.add('active');
+      createKey(rasklad[localStorage.language], 1);
     }
     if (keyElement.id === 'CapsLock') {
-      keyElement.classList.add('active');
       capsLockON = !capsLockON;
       simbol.toLocaleUpperCase();
-      createKey(keyValueEu, 1);
+      createKey(rasklad[localStorage.language], 1);
     }
-    if (keyElement.id === 'AltLeft' && keyElement.id === 'ControlLeft' && language === 'en') {
-      language = 'ru';
-      localStorage.language = 'ru';
+    if (keyElement.id === 'AltLeft' && document.getElementById('ControlLeft').classList.contains('active')) {
       switchLanguage();
-    } else if (keyElement.id === 'AltLeft' && keyElement.id === 'ControlLeft' && language === 'ru') {
-      language = 'en';
-      localStorage.language = 'en';
+    } else if (keyElement.id === 'ControlLeft' && document.getElementById('AltLeft').classList.contains('active')) {
       switchLanguage();
     }
   }
