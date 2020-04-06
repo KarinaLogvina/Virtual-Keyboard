@@ -52,6 +52,12 @@ const createKey = (rasklad, item) => {
       but.className = 'key';
       rows[i].append(but);
       but.id = keyCode[i][idx];
+      if (but.id === 'ShiftLeft' ||  but.id === 'Tab' || but.id === 'CapsLock' || but.id === 'Enter' || but.id === 'Backspace') {
+        but.classList.add('special');
+      }
+      if (but.id === 'Space') {
+        but.classList.add('space');
+      }
     });
   }
 };
@@ -109,7 +115,6 @@ const printSimbol = (simbol) => {
 };
 
 const print = document.querySelector('.keyboard');
-const printLetter = print.querySelector('div').innerHTML;
 print.addEventListener('mousedown', (event) => {
   if (event.target.className === 'keyboard' || event.target.className.includes('row')) {
     return;

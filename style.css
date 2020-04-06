@@ -56,15 +56,11 @@ body {
     cursor: pointer;
 }
 
-#Space {
+.space {
     width: 78%;
 }
 
-#Tab,
-#CapsLock,
-#ShiftLeft,
-#Backspace,
-#Enter {
+.special {
     width: 17%;
 }
 .active {
