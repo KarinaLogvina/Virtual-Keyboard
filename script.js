@@ -176,6 +176,8 @@ const toggleCapsLock = (keyElement) => {
   renderKeyboard();
 };
 
+
+
 document.addEventListener('keydown', (event) => {
   const keyElement = document.querySelector(`#${event.code}`);
   if (keyElement && keyElement.id != 'CapsLock') {
@@ -186,9 +188,9 @@ document.addEventListener('keydown', (event) => {
     if (keyElement.id === 'ShiftLeft' || keyElement.id === 'ShiftRight') {
       toggleShift(keyElement, simbol);
     }
-    if (keyElement.id === 'AltLeft' && document.getElementById('ControlLeft').classList.contains('active')) {
+    if (keyElement.id === 'AltLeft' && document.getElementById('ControlLeft').classList.contains('active') || keyElement.id === 'AltRight' && document.getElementById('ControlRight').classList.contains('active')) {
       switchLanguage();
-    } else if (keyElement.id === 'ControlLeft' && document.getElementById('AltLeft').classList.contains('active')) {
+    } else if (keyElement.id === 'ControlLeft' && document.getElementById('AltLeft').classList.contains('active') || keyElement.id === 'ControlRight' && document.getElementById('AltRight').classList.contains('active')) {
       switchLanguage();
     }
   }
