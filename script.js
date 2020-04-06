@@ -16,21 +16,23 @@ let rowTwo = createElement('div', 'row two', keyboard);
 let rowThree = createElement('div', 'row three', keyboard);
 let rowFour = createElement('div', 'row four', keyboard);
 let rowFive = createElement('div', 'row five', keyboard);
+let description = createElement('div', 'discription', keyboard);
+description.innerHTML = 'Смена языка Ctrl + Alt. Клавиатура писалась на windows.'
 
 const keyValueEn = [
   [['`', '~'], ['1', '!'], ['2', '@'], ['3', '#'], ['4', '$'], ['5', '%'], ['6', '^'], ['7', '&'], ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], ['Backspace', 'Backspace']],
-  [['Tab', 'Tab'], ['q', 'Q'], ['w', 'W'], ['e', 'E'], ['r', 'R'], ['t', 'T'], ['y', 'Y'], ['u', 'U'], ['i', 'I'], ['o', 'O'], ['p', 'P'], ['[', '{'], [']', '}'], ['\\', '\\'], ['Del', 'Del']],
+  [['Tab', 'Tab'], ['q', 'Q'], ['w', 'W'], ['e', 'E'], ['r', 'R'], ['t', 'T'], ['y', 'Y'], ['u', 'U'], ['i', 'I'], ['o', 'O'], ['p', 'P'], ['[', '{'], [']', '}'], ['\\', '\\']],
   [['CapsLock', 'CapsLock'], ['a', 'A'], ['s', 'S'], ['d', 'D'], ['f', 'F'], ['g', 'G'], ['h', 'H'], ['j', 'J'], ['k', 'K'], ['l', 'L'], [';', ':'], ['`', '"'], ['Enter', 'Enter']],
   [['Shift', 'Shift'], ['\\', '|'], ['z', 'Z'], ['x', 'X'], ['c', 'C'], ['v', 'V'], ['b', 'B'], ['n', 'N'], ['m', 'M'], [',', '<'], ['.', '>'], ['/', '?'], ['↑', '↑'], ['Shift', 'Shift']],
-  [['Ctrl', 'Ctrl'], ['Win', 'Win'], ['Alt', 'Alt'], [' ', ' '], ['Alt', 'Alt'], ['Ctrl', 'Ctrl'], ['←', '←'], ['↓', '↓'], ['→', '→']],
+  [['Ctrl', 'Ctrl'], ['Win', 'Win'], ['Alt', 'Alt'], [' ', ' '], ['Win', 'Win'], ['Alt', 'Alt'], ['Ctrl', 'Ctrl'], ['←', '←'], ['↓', '↓'], ['→', '→']],
 ];
 
 const keyValueRu = [
   [['ё', 'Ё'], ['1', '!'], ['2', '"'], ['3', '№'], ['4', ';'], ['5', '%'], ['6', ':'], ['7', '?'], ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], ['Backspace', 'Backspace']],
-  [['Tab', 'Tab'], ['й', 'Й'], ['ц', 'Ц'], ['у', 'У'], ['к', 'К'], ['е', 'Е'], ['н', 'Н'], ['г', 'Г'], ['ш', 'Ш'], ['щ', 'Щ'], ['з', 'З'], ['х', 'Х'], ['ъ', 'Ъ'], ['\\', '\\'], ['Del', 'Del']],
+  [['Tab', 'Tab'], ['й', 'Й'], ['ц', 'Ц'], ['у', 'У'], ['к', 'К'], ['е', 'Е'], ['н', 'Н'], ['г', 'Г'], ['ш', 'Ш'], ['щ', 'Щ'], ['з', 'З'], ['х', 'Х'], ['ъ', 'Ъ'], ['\\', '\\']],
   [['CapsLock', 'CapsLock'], ['ф', 'Ф'], ['ы', 'Ы'], ['в', 'В'], ['а', 'А'], ['п', 'П'], ['р', 'Р'], ['о', 'О'], ['л', 'Л'], ['д', 'Д'], ['ж', 'Ж'], ['э', 'Э'], ['Enter', 'Enter']],
   [['Shift', 'Shift'], ['\\', '|'], ['я', 'Я'], ['ч', 'Ч'], ['c', 'C'], ['м', 'М'], ['и', 'И'], ['т', 'Т'], ['ь', 'Ь'], ['б', 'Б'], ['ю', 'Ю'], ['.', ','], ['↑', '↑'], ['Shift', 'Shift']],
-  [['Ctrl', 'Ctrl'], ['Win', 'Win'], ['Alt', 'Alt'], [' ', ' '], ['Alt', 'Alt'], ['Ctrl', 'Ctrl'], ['←', '←'], ['↓', '↓'], ['→', '→']],
+  [['Ctrl', 'Ctrl'], ['Win', 'Win'], ['Alt', 'Alt'], [' ', ' '], ['Win', 'Win'], ['Alt', 'Alt'], ['Ctrl', 'Ctrl'], ['←', '←'], ['↓', '↓'], ['→', '→']],
 ];
 
 const keyCode = [
@@ -38,10 +40,10 @@ const keyCode = [
   ['Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash', 'Delete'],
   ['CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter'],
   ['ShiftLeft', 'Backslash', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ArrowUp', 'ShiftRight'],
-  ['ControlLeft', 'OSLeft', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight'],
+  ['ControlLeft', 'OSLeft', 'AltLeft', 'Space', 'OSRight', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight'],
 ];
 
-let rasklad = {
+let lang = {
   ru: keyValueRu,
   en: keyValueEn
 };
@@ -57,10 +59,10 @@ const renderKeyboard = () => {
   });
 }
 
-const createKey = (rasklad, item) => {
+const createKey = (lang, item) => {
   for (let i = 0; i < rows.length; i += 1) {
     rows[i].innerHTML = "";
-    rasklad[i].forEach((array, idx) => {
+    lang[i].forEach((array, idx) => {
       const but = document.createElement('div');
       but.innerHTML = array[item];
       but.className = 'key';
@@ -128,7 +130,7 @@ print.addEventListener('mouseup', (event) => {
 if (localStorage.language === undefined) {
   localStorage.language = 'en';
 }
-createKey(rasklad[localStorage.language], 0);
+createKey(lang[localStorage.language], 0);
 
 const switchLanguage = () => {
   if (localStorage.language === 'ru') {
@@ -136,7 +138,7 @@ const switchLanguage = () => {
   } else {
     localStorage.language = 'ru';
   }
-  createKey(rasklad[localStorage.language], 0);
+  createKey(lang[localStorage.language], 0);
 }
 
 let capsLockON = false;
@@ -145,15 +147,15 @@ const toggleShift = (keyElement, simbol) => {
   const shiftId = keyElement.id; 
   shiftON = !shiftON;
   if(!shiftON && !capsLockON) {
-    createKey(rasklad[localStorage.language], 0);
+    createKey(lang[localStorage.language], 0);
   }
   if (capsLockON || shiftON) {
     simbol = simbol && simbol.toUpperCase();
-    createKey(rasklad[localStorage.language], 1);
+    createKey(lang[localStorage.language], 1);
   }
   if (capsLockON && shiftON) {
     simbol = simbol && simbol.toLowerCase();
-    createKey(rasklad[localStorage.language], 0);
+    createKey(lang[localStorage.language], 0);
   }
   if (shiftON) {
     activeKeysArray.add(shiftId);
@@ -164,11 +166,11 @@ const toggleCapsLock = (keyElement) => {
   const capsLockId = keyElement.id;
   if (!capsLockON && !activeKeysSet.has(capsLockId)) {
     activeKeysSet.add(capsLockId);
-    createKey(rasklad[localStorage.language], 1);
+    createKey(lang[localStorage.language], 1);
   }
   if (capsLockON && activeKeysSet.has(capsLockId)) {
     activeKeysSet.delete(capsLockId);
-    createKey(rasklad[localStorage.language], 0);
+    createKey(lang[localStorage.language], 0);
   }
   capsLockON = !capsLockON;
   renderKeyboard();

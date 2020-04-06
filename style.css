@@ -68,3 +68,9 @@ body {
     border-color: #fff;
     color: #fff;
 }
+
+.discription {
+    font-family: sans-serif;
+    margin-top: 1%;
+    color: #42687a;
+}
