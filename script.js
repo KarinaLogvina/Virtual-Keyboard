@@ -160,7 +160,7 @@ print.addEventListener('mousedown', (event) => {
     toggleCapsLock(event.target);
     textArea.value += '';
   } else {
-    const letter = event.target.closest('div').innerHTML;
+    const letter = event.target.closest('div').innerText;
     activeKeysSet.add(event.target.closest('div').id);
     printSymbol(letter);
   }
@@ -171,9 +171,7 @@ print.addEventListener('mouseup', (event) => {
   if (event.target.className === 'keyboard' || event.target.className.includes('row')) {
     return;
   }
-  if (event.target.id === 'CapsLock') {
-    activeKeysSet.add(event.target.id);
-  } else {
+  if (event.target.id !== 'CapsLock') {
     activeKeysSet.delete(event.target.closest('div').id);
   }
   renderKeyboard();
