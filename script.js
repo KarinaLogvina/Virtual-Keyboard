@@ -16,8 +16,8 @@ createElement('div', 'row two', keyboard);
 createElement('div', 'row three', keyboard);
 createElement('div', 'row four', keyboard);
 createElement('div', 'row five', keyboard);
-const description = createElement('div', 'discription', keyboard);
-description.innerHTML = 'Смена языка Ctrl + Alt. Клавиатура писалась на windows.';
+const description = createElement('div', 'discription', divContainer);
+description.innerText = 'Смена языка Ctrl + Alt. Клавиатура писалась на windows';
 
 const keyValueEn = [
   [['`', '~'], ['1', '!'], ['2', '@'], ['3', '#'], ['4', '$'], ['5', '%'], ['6', '^'], ['7', '&'], ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], ['Backspace', 'Backspace']],
