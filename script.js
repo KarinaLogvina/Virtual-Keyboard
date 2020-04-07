@@ -181,7 +181,7 @@ document.addEventListener('keydown', (event) => {
   const keyElement = document.querySelector(`#${event.code}`);
   if (keyElement && keyElement.id !== 'CapsLock') {
     event.preventDefault();
-    if (activeKeysSet.has('ShiftRight') || activeKeysSet.has('ShiftLeft')) {
+    if (activeKeysSet.has(keyElement.id)) {
       return;
     }
     const symbol = keyElement.closest('div').innerHTML;
