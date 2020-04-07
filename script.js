@@ -160,7 +160,7 @@ print.addEventListener('mousedown', (event) => {
     toggleCapsLock(event.target);
     textArea.value += '';
   } else {
-    const letter = event.target.closest('div').innerText;
+    const letter = event.target.closest('div').innerHTML;
     activeKeysSet.add(event.target.closest('div').id);
     printSymbol(letter);
   }
@@ -184,7 +184,7 @@ document.addEventListener('keydown', (event) => {
     if (activeKeysSet.has(keyElement.id)) {
       return;
     }
-    const symbol = keyElement.closest('div').innerText;
+    const symbol = keyElement.closest('div').innerHTML;
     printSymbol(symbol);
     activeKeysSet.add(keyElement.id);
     if (keyElement.id === 'ShiftLeft' || keyElement.id === 'ShiftRight') {
