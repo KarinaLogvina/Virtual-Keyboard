@@ -104,8 +104,8 @@ const printSymbol = (symbol) => {
   }
 };
 
-if (localStorage.languargeSelection === undefined) {
-  localStorage.languargeSelection = 'en';
+if (localStorage.language === undefined) {
+  localStorage.language = 'en';
 }
 createKey(languargeSelection[localStorage.language], 0);
 
